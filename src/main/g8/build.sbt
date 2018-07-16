@@ -9,6 +9,8 @@ assemblyOutputPath in assembly := file("target/$project_name$.jar")
 val akkaHttpVersion = "10.1.3"
 
 val dependencies = Seq(
+  "com.typesafe.akka" %% "akka-stream" % "2.5.14",
+
   "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
   "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
   "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion % Test,
