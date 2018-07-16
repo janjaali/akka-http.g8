@@ -6,10 +6,12 @@ scalaVersion := "2.12.6"
 
 assemblyOutputPath in assembly := file("target/$project_name$.jar")
 
+val akkaHttpVersion = "10.1.3"
+
 val dependencies = Seq(
-  "com.typesafe.akka" %% "akka-http" % "10.0.9",
-  "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.10",
-  "com.typesafe.akka" %% "akka-http-testkit" % "10.0.9" % Test,
+  "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
+  "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
+  "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion % Test,
 
   "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2",
   "ch.qos.logback" % "logback-classic" % "1.2.3"
