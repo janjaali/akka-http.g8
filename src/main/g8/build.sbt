@@ -20,5 +20,3 @@ val dependencies = Seq(
 
 libraryDependencies ++= dependencies
 libraryDependencies ++= testDependencies
-
-(compile in Compile) := ((compile in Compile) dependsOn (scalastyle in Compile).toTask("")).value
