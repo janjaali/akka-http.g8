@@ -22,7 +22,11 @@ object Server extends LazyLogging {
     val host = "0.0.0.0"
     val port = config.getInt("port")
 
-    Http().bindAndHandle(Routes.routes, host, port)
+    val routes = ApiRoutes.routes(
+      new HelloWorldRoute().route
+    )
+
+    Http().bindAndHandle(routes, host, port)
       .onComplete {
         case Success(_) => logger.info(s"Server started on http://\$host:\$port/")
         case Failure(e) =>

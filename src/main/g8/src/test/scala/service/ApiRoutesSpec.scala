@@ -4,17 +4,18 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.{FreeSpec, Matchers}
 
-class RoutesSpec extends FreeSpec with Matchers with ScalatestRouteTest {
+class ApiRoutesSpec extends FreeSpec with Matchers with ScalatestRouteTest {
   "The server routes" - {
-    val serverRoutes = Routes.routes
+    val helloWorldRoute = new HelloWorldRoute().route
+    val serverRoutes = ApiRoutes.routes(helloWorldRoute)
 
     "when asked to greet" - {
-      val request = Get("/api/rest")
+      val request = Get("/api/rest/hello-world")
 
       "should answer with 'hello world!'" in {
         request ~> serverRoutes ~> check {
           status shouldBe StatusCodes.OK
-          responseAs[String] shouldBe "hello world!"
+          responseAs[String] shouldBe "Hello World!"
         }
       }
     }
