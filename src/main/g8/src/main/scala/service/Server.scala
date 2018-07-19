@@ -5,6 +5,8 @@ import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
+import service.api.ApiRoutes
+import service.helloworld.HelloWorldRoute
 
 import scala.concurrent.ExecutionContextExecutor
 import scala.util.{Failure, Success}
@@ -22,9 +24,9 @@ object Server extends LazyLogging {
     val host = "0.0.0.0"
     val port = config.getInt("port")
 
-    val routes = ApiRoutes.routes(
+    val routes = new ApiRoutes(
       new HelloWorldRoute().route
-    )
+    ).api
 
     Http().bindAndHandle(routes, host, port)
       .onComplete {

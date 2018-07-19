@@ -1,6 +1,7 @@
-package service
+package service.api
 
 import akka.actor.ActorSystem
+import akka.http.scaladsl.model.HttpResponse
 import akka.http.scaladsl.model.StatusCodes.InternalServerError
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
@@ -9,10 +10,10 @@ import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.duration._
 
-object ApiRoutes extends LazyLogging {
+class ApiRoutes(routes: Route*) extends LazyLogging {
   implicit val timeout: Timeout = 10.seconds
 
-  def routes(routes: Route*)(implicit actorSystem: ActorSystem): Route =
+  def api(implicit actorSystem: ActorSystem): Route =
     handleExceptions(exceptionHandler) {
       pathPrefix("api" / "rest") {
         routes.foldLeft[Route](reject)(_ ~ _)
@@ -22,6 +23,6 @@ object ApiRoutes extends LazyLogging {
   private val exceptionHandler = ExceptionHandler {
     case ex: Exception =>
       logger.error(s"Catch exception in general exceptionHandler: \$ex")
-      complete(InternalServerError, "Something strange happened.")
+      complete(HttpResponse(InternalServerError, entity = "Something strange happened."))
   }
 }
